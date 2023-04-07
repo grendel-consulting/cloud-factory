@@ -13,4 +13,7 @@ module "factory" {
   account_provisioning_customizations_repo_name = "${var.github_owner}/cloud-factory-provisioning"
   global_customizations_repo_name               = "${var.github_owner}/cloud-factory-baseline"
   account_customizations_repo_name              = "${var.github_owner}/cloud-factory-customisations"
+
+  aft_feature_delete_default_vpcs_enabled = true
+  aft_vpc_endpoints = false
 }
