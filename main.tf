@@ -1,5 +1,5 @@
 module "factory" {
-  source = "github.com/aws-ia/terraform-aws-control_tower_account_factory"
+  source = "github.com/grendel-consulting/terraform-aws-control_tower_account_factory"
 
   ct_management_account_id    = var.ct_management_account_id
   log_archive_account_id      = var.log_archive_account_id
