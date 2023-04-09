@@ -36,3 +36,9 @@ variable "tf_backend_secondary_region" {
   type        = string
   description = "AWS Region where Terraform backend will be backed up"
 }
+
+variable "terraform_token" {
+  type        = string
+  description = "Terraform Cloud Token"
+  sensitive   = true
+}
