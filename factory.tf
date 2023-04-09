@@ -4,8 +4,8 @@ module "factory" {
   aft_framework_repo_url     = "https://github.com/grendel-consulting/terraform-aws-control_tower_account_factory.git"
   aft_framework_repo_git_ref = "main"
   terraform_distribution     = "tfc"
-  terraform_org_name         = "grendel-consulting"
-  terraform_token            = var.terraform_token
+  terraform_org_name         = var.tfc_organisation_name
+  terraform_token            = var.tfc_token
   terraform_version          = "1.4.4"
 
   ct_management_account_id    = var.ct_management_account_id
