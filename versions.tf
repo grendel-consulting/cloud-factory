@@ -19,17 +19,17 @@ terraform {
 
   required_providers {
     aws = {
-      source  = "integrations/aws"
+      source  = "hashicorp/aws"
       version = "4.62.0"
     }
 
     tfe = {
-      source  = "integrations/tfe"
+      source  = "hashicorp/tfe"
       version = "0.43.0"
     }
 
     tls = {
-      source  = "integrations/tls"
+      source  = "hashicorp/tls"
       version = "4.0.4"
     }
   }
