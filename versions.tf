@@ -8,7 +8,7 @@ provider "tfe" {
 }
 
 terraform {
-  required_version = "1.4.5" # Needs to match TFC version
+  required_version = "1.4.6" # Needs to match TFC version
 
   cloud {
     organization = "grendel-consulting"
