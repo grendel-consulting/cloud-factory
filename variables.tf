@@ -73,3 +73,14 @@ variable "tfc_token" {
   description = "Authentication token for TFC (or TFE)"
   sensitive   = true
 }
+
+variable "STEAMPIPE_ACCOUNT_ID" {
+  type        = string
+  description = "AWS Account ID for the Steampipe Cloud environment, from Terraform Cloud"
+}
+
+variable "STEAMPIPE_EXTERNAL_ID" {
+  type        = string
+  description = "External ID for the Steampipe Cloud environment, from Terraform Cloud"
+  sensitive   = true
+}
