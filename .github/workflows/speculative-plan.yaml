@@ -22,7 +22,7 @@ jobs:
           egress-policy: audit
 
       - name: Checkout Repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Setup Teraform
         uses: hashicorp/setup-terraform@v2
@@ -52,7 +52,7 @@ jobs:
           egress-policy: audit
 
       - name: Checkout Repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Cache Plugins
         uses: actions/cache@v3
@@ -89,7 +89,7 @@ jobs:
           egress-policy: audit
 
       - name: Checkout Repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Run with SARIF Output
         uses: tfsec/tfsec-sarif-action@v0.1.4
@@ -123,7 +123,7 @@ jobs:
           egress-policy: audit
 
       - name: Checkout Repo
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Configure Terraform Cloud
         uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.0.4
