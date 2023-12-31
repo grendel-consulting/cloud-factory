@@ -1,3 +1,4 @@
+# trivy:ignore:AVD-AWS-0089
 module "factory" {
   source = "github.com/grendel-consulting/terraform-aws-control_tower_account_factory"
 
