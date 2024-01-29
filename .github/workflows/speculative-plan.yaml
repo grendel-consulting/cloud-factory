@@ -136,7 +136,7 @@ jobs:
           show-progress: false
 
       - name: Configure Terraform Cloud
-        uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.1.1
+        uses: hashicorp/tfc-workflows-github/actions/upload-configuration@v1.2.0
         id: upload
         with:
           workspace: ${{ env.TF_WORKSPACE }}
@@ -144,7 +144,7 @@ jobs:
           speculative: true
 
       - name: Trigger a Terraform Cloud Run
-        uses: hashicorp/tfc-workflows-github/actions/create-run@v1.1.1
+        uses: hashicorp/tfc-workflows-github/actions/create-run@v1.2.0
         id: run
         with:
           workspace: ${{ env.TF_WORKSPACE }}
@@ -152,7 +152,7 @@ jobs:
           plan_only: true
 
       - name: Fetch the Plan Output
-        uses: hashicorp/tfc-workflows-github/actions/plan-output@v1.1.1
+        uses: hashicorp/tfc-workflows-github/actions/plan-output@v1.2.0
         id: plan-output
         with:
           plan: ${{ steps.run.outputs.plan_id }}
