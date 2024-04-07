@@ -8,12 +8,12 @@ on:
 env:
   TF_API_TOKEN: "${{ secrets.TF_API_TOKEN }}"
 
+permissions:
+  contents: read
+
 jobs:
   validate:
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
 
     steps:
       - name: Harden Runner
@@ -43,9 +43,6 @@ jobs:
 
   tflint:
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
 
     steps:
       - name: Harden Runner
@@ -79,9 +76,6 @@ jobs:
 
   trivy:
     runs-on: ubuntu-latest
-
-    permissions:
-      contents: read
 
     env:
       trivy_sarif: trivy.sarif
