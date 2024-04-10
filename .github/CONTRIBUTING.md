@@ -43,10 +43,10 @@ and [continuous integration](https://trunkbaseddevelopment.com/continuous-integr
 for everything being worked on by humans. Bots handle the heavy lifting in the
 subsequent pull requests.
 
-We use Linters and Formatters to maintain a consistent opinionated style.
+We maintain a consistent opinionated style using Linters and Formatters.
 
-We use Code Scanners to help spot bugs, issues and vulnerabilities.
+Our Code Scanners help spot bugs, issues, and vulnerabilities.
 
-We pin dependencies and then keep them evergreen automagically.
+Dependencies are pinned and kept evergreen automagically.
 
 [contact]: mailto:abuse@grendel-consulting.com
