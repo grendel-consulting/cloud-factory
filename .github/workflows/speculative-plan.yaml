@@ -5,22 +5,33 @@ on:
     branches:
       - main
 
-permissions:
-  contents: read
+permissions: {}
 
 jobs:
   validate:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
         with:
-          egress-policy: audit
+          disable-sudo: true
+          egress-policy: block
+          allowed-endpoints: >
+            app.terraform.io:443
+            archivist.terraform.io:443
+            checkpoint-api.hashicorp.com:443
+            github.com:443
+            registry.terraform.io:443
+            releases.hashicorp.com:443
 
       - name: Checkout Repo
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
+          persist-credentials: false
           show-progress: false
 
       - name: Setup Teraform
@@ -41,15 +52,24 @@ jobs:
   tflint:
     runs-on: ubuntu-latest
 
+    permissions:
+      contents: read
+
     steps:
       - name: Harden Runner
         uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
         with:
-          egress-policy: audit
+          disable-sudo: true
+          egress-policy: block
+          allowed-endpoints: >
+            api.github.com:443
+            github.com:443
+            objects.githubusercontent.com:443
 
       - name: Checkout Repo
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
+          persist-credentials: false
           show-progress: false
 
       - name: Cache Plugins
@@ -75,6 +95,7 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
+      contents: read
       # Needed to upload the results to code-scanning dashboard.
       security-events: write
 
@@ -85,11 +106,23 @@ jobs:
       - name: Harden Runner
         uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
         with:
-          egress-policy: audit
+          disable-sudo: true
+          egress-policy: block
+          allowed-endpoints: >
+            api.github.com:443
+            d2glxqk2uabbnd.cloudfront.net:443
+            d5l0dvt14r5h8.cloudfront.net:443
+            ghcr.io:443
+            github.com:443
+            objects.githubusercontent.com:443
+            pkg-containers.githubusercontent.com:443
+            public.ecr.aws:443
+            raw.githubusercontent.com:443
 
       - name: Checkout Repo
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
+          persist-credentials: false
           show-progress: false
 
       - name: Run with SARIF Output
@@ -127,11 +160,18 @@ jobs:
       - name: Harden Runner
         uses: step-security/harden-runner@91182cccc01eb5e619899d80e4e971d6181294a7 # v2.10.1
         with:
-          egress-policy: audit
+          disable-sudo: true
+          egress-policy: block
+          allowed-endpoints: >
+            api.github.com:443
+            app.terraform.io:443
+            archivist.terraform.io:443
+            github.com:443
 
       - name: Checkout Repo
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
         with:
+          persist-credentials: false
           show-progress: false
 
       - name: Configure Terraform Cloud
@@ -158,10 +198,19 @@ jobs:
 
       - uses: actions/github-script@60a0d83039c74a4aee543508d2ffcb1c3799cdea # v7.0.1
         if: github.event_name == 'pull_request'
+        env:
+          # Load to intermeditate environment variables to avoid script injections
+          PLANNED_TO_ADD:  ${{ steps.plan-output.outputs.add }}
+          PLANNED_TO_CHANGE:  ${{ steps.plan-output.outputs.change }}
+          PLANNED_TO_DESTROY:  ${{ steps.plan-output.outputs.destroy }}
+          PLAN_URL:  ${{ steps.run.outputs.run_link }}
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            // 1. Retrieve existing bot comments for the PR
+            // 1. Retrieve environment variables from the earlier steps
+            const { PLANNED_TO_ADD, PLANNED_TO_CHANGE, PLANNED_TO_DESTROY, PLAN_URL } = process.env
+
+            // 2. Retrieve existing bot comments for the PR
             const { data: comments } = await github.rest.issues.listComments({
               owner: context.repo.owner,
               repo: context.repo.repo,
@@ -171,8 +220,8 @@ jobs:
               return comment.user.type === 'Bot' && comment.body.includes('Terraform Cloud Plan Output')
             })
             const output = `#### Terraform Cloud Plan Output
-               Plan: ${{ steps.plan-output.outputs.add }} to add, ${{ steps.plan-output.outputs.change }} to change, ${{ steps.plan-output.outputs.destroy }} to destroy.
-               [Terraform Cloud Plan](${{ steps.run.outputs.run_link }})
+               Plan: ${PLANNED_TO_ADD} to add, ${PLANNED_TO_CHANGE} to change, ${PLANNED_TO_DESTROY} to destroy.
+               [Terraform Cloud Plan]("$PLAN_URL")
                `
             // 3. If we have a comment, update it, otherwise create a new one
             if (botComment) {
