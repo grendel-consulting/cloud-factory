@@ -207,7 +207,10 @@ jobs:
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
           script: |
-            // 1. Retrieve existing bot comments for the PR
+            // 1. Retrieve environment variables from the earlier steps
+            const { PLANNED_TO_ADD, PLANNED_TO_CHANGE, PLANNED_TO_DESTROY, PLAN_URL } = process.env
+
+            // 2. Retrieve existing bot comments for the PR
             const { data: comments } = await github.rest.issues.listComments({
               owner: context.repo.owner,
               repo: context.repo.repo,
