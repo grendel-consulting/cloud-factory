@@ -220,7 +220,7 @@ jobs:
               return comment.user.type === 'Bot' && comment.body.includes('Terraform Cloud Plan Output')
             })
             const output = `#### Terraform Cloud Plan Output
-               Plan: "$PLANNED_TO_ADD" to add, "$PLANNED_TO_CHANGE" to change, "$PLANNED_TO_DESTROY" to destroy.
+               Plan: ${PLANNED_TO_ADD} to add, ${PLANNED_TO_CHANGE} to change, ${PLANNED_TO_DESTROY} to destroy.
                [Terraform Cloud Plan]("$PLAN_URL")
                `
             // 3. If we have a comment, update it, otherwise create a new one
