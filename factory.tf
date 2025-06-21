@@ -23,7 +23,6 @@ module "factory" {
   account_customizations_repo_name              = "${var.github_owner}/cloud-factory-customisations"
 
   aft_feature_delete_default_vpcs_enabled = true
-  # aft_feature_disable_private_networking  = true
-  aft_enable_vpc    = false
-  aft_vpc_endpoints = false
+  aft_enable_vpc                          = false
+  aft_vpc_endpoints                       = false
 }
