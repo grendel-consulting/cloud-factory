@@ -7,7 +7,7 @@ module "factory" {
   terraform_distribution     = "tfc"
   terraform_org_name         = var.tfc_organisation_name
   terraform_token            = var.tfc_token
-  terraform_version          = "1.5.0" # Needs to match TFC version for requests and provisioning repos
+  terraform_version          = "1.12.2" # Needs to match TFC version for requests and provisioning repos
 
   ct_management_account_id    = var.ct_management_account_id
   log_archive_account_id      = var.log_archive_account_id
@@ -23,6 +23,7 @@ module "factory" {
   account_customizations_repo_name              = "${var.github_owner}/cloud-factory-customisations"
 
   aft_feature_delete_default_vpcs_enabled = true
-  aft_feature_disable_private_networking  = true
-  aft_vpc_endpoints                       = false
+  # aft_feature_disable_private_networking  = true
+  aft_enable_vpc    = false
+  aft_vpc_endpoints = false
 }
