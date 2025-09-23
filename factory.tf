@@ -22,7 +22,7 @@ module "factory" {
   global_customizations_repo_name               = "${var.github_owner}/cloud-factory-baseline"
   account_customizations_repo_name              = "${var.github_owner}/cloud-factory-customisations"
 
-  backup_recovery_point_retention = 90
+  backup_recovery_point_retention = 30
 
   aft_feature_delete_default_vpcs_enabled = true
   aft_enable_vpc                          = false
